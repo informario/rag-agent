@@ -1,35 +1,59 @@
 import asyncio
 import os
+from dotenv import load_dotenv
 from llama_index.core.agent.workflow import AgentWorkflow, ReActAgent
 from llama_index.core.tools import FunctionTool
 from llama_index.llms.openrouter import OpenRouter
+from llama_index.llms.openai import OpenAI
+from llama_index.llms.anthropic import Anthropic
 from app.utils.tree import TreeExplorer
 
 prompt = """
 You are a networks expert and your job is to find all the linecards in a switch datasheet.
 You will be provided with a hierarchical tree structure that represents the contents of a document.
 You will be provided with a series of tools which you will use to traverse the tree.
-When all done, you will return a list of node_id separated by commas.
 
-You MUST respond in this exact format every time:
+You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
 Action: <tool name>
 Action Input: {"<param>": "<value>"}
 
-When you have the final answer:
+When, and only when, you have identified ALL the linecards, respond in this exact format:
 Thought: I have found all the linecards.
-Answer: <comma separated node_ids>
+Answer: <node_id_1>,<node_id_2>,<node_id_3>
+
+Strict rules for the Answer line:
+- It must contain ONLY the node_ids, separated by commas.
+- No spaces, brackets, quotes, or any other characters.
+- No explanations, labels, or additional text before or after the node_ids.
+- Do not repeat a node_id.
+- If only one linecard is found, return a single node_id with no commas.
 """
+
+def get_llm():
+    load_dotenv("app/.env")
+    provider = os.getenv("LLM_PROVIDER")
+    model = os.getenv("MODEL")
+    api_key = os.getenv("API_KEY")
+
+    if provider == "openai":
+        return OpenAI(model=model, api_key=api_key)
+    elif provider == "anthropic":
+        return Anthropic(model=model, api_key=api_key)
+    elif provider == "openrouter":
+        return OpenRouter(
+            api_key=api_key,
+            model=model,
+            max_tokens=4096,
+            context_window=131072,
+        )
+    else:
+        raise ValueError(f"Unsupported LLM provider: {provider}")
 
 def get_agent(json_path: str = "app/database/CE16800_hardware_description_structure.json"):
     explorer = TreeExplorer(json_path)
 
-    llm = OpenRouter(
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-        model="openai/gpt-oss-120b",
-        max_tokens=4096,
-        context_window=131072,
-    )
+    llm = get_llm()
 
     def go_down(node_id: str) -> str:
         """Move down to a child node by its node_id."""
