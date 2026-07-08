@@ -3,40 +3,40 @@ import os
 from dotenv import load_dotenv
 from app.utils.pdf_extractor import PDFExtractor
 from app.agent.linecard_parser import parse_linecard
+from app.agent.linecard_extractor import get_agent as get_linecard_agent
+from app.agent.optics_extractor import get_agent as get_optics_agent
 
 load_dotenv()
 
-def run_extraction():
-    """
-    agent = get_agent("app/database/CE16800_hardware_description_structure.json")
-    response = agent.run(user_msg="Find all the linecards in this document and return their node_ids.")
-    print("Agent Response:")
-    print(str(response)) #Answer: 0130,0135,0139,0140,0144,0149,0153,0154,0159,0163,0164,0168,0173,0177,0180,0185,0188
-    """
+async def extract_linecards(json_path):
+    agent = get_linecard_agent(json_path)
+    response = await agent.run(user_msg="Find all the linecards in this document and return their node_ids.", max_iterations=500)
+    return response
 
-    answer = "Answer: 0159"#0130,0135,0139,0140,0144,0149,0153,0154,0159,0163,0164,0168,0173,0177,0180,0185,0188"
-    node_ids = answer.replace("Answer: ", "").split(",")
-    
-    pdf_path = "CE16800_hardware_description.pdf"
-    json_path = "app/database/CE16800_hardware_description_structure.json"
-    
+async def extract_optics(json_path):
+    agent, registry = get_optics_agent(json_path)
+    response = await agent.run(user_msg="Find all the optics in this document and return their node_ids.", max_iterations=500)
+    return response, registry.to_dict()
+
+def parse_linecards(node_ids, json_path, pdf_path):
+    node_ids = node_ids.replace("Answer: ", "").split(",")
     extractor = PDFExtractor(pdf_path, json_path)
-    
+
     if not os.path.exists("app/database"):
         os.makedirs("app/database")
-        
+
     for node_id in node_ids:
         print(f"Processing node: {node_id}")
         text = extractor.get_text_for_node(node_id)
-        
+
         if text and "not found" not in text:
             json_response = parse_linecard(text)
-            
+
             # Save raw response anyway to avoid data loss (API cost)
             raw_filename = f"app/database/raw_{node_id}.txt"
             with open(raw_filename, 'w', encoding='utf-8') as f:
                 f.write(json_response)
-            
+
             # Attempt to clean markdown if present
             cleaned_response = json_response.strip()
             if cleaned_response.startswith("```"):
@@ -67,15 +67,21 @@ def run_extraction():
             print(f"Text extraction failed for node {node_id}")
 
 
-if __name__ == "__main__":
-    run_extraction()
-
-    """
+async def run_extraction():
     pdf_path = "CE16800_hardware_description.pdf"
     json_path = "app/database/CE16800_hardware_description_structure.json"
-    extractor = PDFExtractor(pdf_path, json_path)
-    node_ids = ["0130","0135","0139","0140"]
-    for node_id in node_ids:
-        text = extractor.get_text_for_node(node_id)
-        print(text)
-    """
+
+    #linecard_node_ids = await extract_linecards(json_path)
+    response, registry = await extract_optics(json_path)
+    print("##")
+    print(response)
+    print("##")
+    print(registry)
+    #parse_linecards(linecard_node_ids, json_path, pdf_path)
+
+
+
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(run_extraction())
