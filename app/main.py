@@ -30,12 +30,13 @@ def parse_linecards(node_ids, json_path, pdf_path):
     if "Answer: " in node_ids:
         node_ids = node_ids.split("Answer: ")[-1].strip()
     
-    node_ids = node_ids.split(",")
+    node_ids = [nid.strip() for nid in node_ids.split(",") if nid.strip()]
     extractor = PDFExtractor(pdf_path, json_path)
 
     if not os.path.exists("app/database"):
         os.makedirs("app/database")
 
+    parsed_linecards = {}
     for node_id in node_ids:
         print(f"Processing node: {node_id}")
         text = extractor.get_text_for_node(node_id)
@@ -69,6 +70,7 @@ def parse_linecards(node_ids, json_path, pdf_path):
                     # Optionally remove the raw file if success
                     if os.path.exists(raw_filename):
                         os.remove(raw_filename)
+                    parsed_linecards[model_name] = data
                 else:
                     print(f"No model_name found in response for node {node_id}")
             except json.JSONDecodeError:
@@ -76,6 +78,7 @@ def parse_linecards(node_ids, json_path, pdf_path):
                 print(f"Raw response saved to {raw_filename}")
         else:
             print(f"Text extraction failed for node {node_id}")
+    return parsed_linecards
 
 
 async def run_extraction():
@@ -83,8 +86,9 @@ async def run_extraction():
     json_path = "app/database/CE16800_hardware_description_structure.json"
 
     linecard_node_ids = await extract_linecards(json_path)
-    """
+    
     response, registry = await extract_optics(json_path)
+    """
     print("##")
     print(response)
     print("##")

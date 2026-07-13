@@ -2,7 +2,7 @@
   "model_name": "CEL48XSFD-G",
   "description": "48-Port 10GE Interface Card (FD-G, SFP+)",
   "port_configuration": {
-    "sfp_plus_10ge": {
+    "sfp_plus_sfp": {
       "port_count": 48,
       "speeds": {
         "1x10G": 48,

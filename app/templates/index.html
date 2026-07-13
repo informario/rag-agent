@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Agent Extraction</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 20px;
+            width: 100%;
+            padding: 50px;
+            text-align: center;
+            font: 20pt bold arial;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .drop-zone.over { border-color: #333; color: #333; }
+        #files-list { margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        #status { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>RAG Agent Extraction Pipeline</h1>
+    <div id="drop-zone" class="drop-zone">
+        Drag and drop JSON and PDF files here
+    </div>
+    <div id="files-list"></div>
+    <button id="run-btn" disabled>Run Pipeline</button>
+    <div id="status"></div>
+    <div id="results-container" style="display: none;">
+        <h2>Linecard Node IDs</h2>
+        <div id="linecard-nodes" class="output-box"></div>
+
+        <h2>Optics JSON</h2>
+        <pre id="optics-json" class="output-box"></pre>
+
+        <h2>Linecard JSONs</h2>
+        <div id="linecard-details"></div>
+    </div>
+
+    <style>
+        .output-box {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        h2 { margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        .linecard-item { margin-bottom: 20px; }
+    </style>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const filesList = document.getElementById('files-list');
+        const runBtn = document.getElementById('run-btn');
+        const statusDiv = document.getElementById('status');
+        const resultsContainer = document.getElementById('results-container');
+        const linecardNodesDiv = document.getElementById('linecard-nodes');
+        const opticsJsonPre = document.getElementById('optics-json');
+        const linecardDetailsDiv = document.getElementById('linecard-details');
+        let files = {};
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('over'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('over'), false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer;
+            let droppedFiles = dt.files;
+            handleFiles(droppedFiles);
+        }
+
+        function handleFiles(droppedFiles) {
+            for (let i = 0; i < droppedFiles.length; i++) {
+                const file = droppedFiles[i];
+                if (file.name.endsWith('.json')) {
+                    files.json = file;
+                } else if (file.name.endsWith('.pdf')) {
+                    files.pdf = file;
+                }
+            }
+            updateList();
+        }
+
+        function updateList() {
+            filesList.innerHTML = '';
+            if (files.json) filesList.innerHTML += `<div>JSON: ${files.json.name}</div>`;
+            if (files.pdf) filesList.innerHTML += `<div>PDF: ${files.pdf.name}</div>`;
+            runBtn.disabled = !(files.json && files.pdf);
+        }
+
+        runBtn.addEventListener('click', () => {
+            runBtn.disabled = true;
+            statusDiv.textContent = 'Processing... Please wait. This may take a few minutes as it runs multiple agents.';
+            resultsContainer.style.display = 'none';
+            linecardDetailsDiv.innerHTML = '';
+            
+            const formData = new FormData();
+            formData.append('json_file', files.json);
+            formData.append('pdf_file', files.pdf);
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'completed') {
+                    statusDiv.textContent = 'Processing completed successfully.';
+                    resultsContainer.style.display = 'block';
+                    
+                    linecardNodesDiv.textContent = result.linecard_nodes;
+                    opticsJsonPre.textContent = JSON.stringify(result.optics, null, 2);
+                    
+                    for (const [model, data] of Object.entries(result.linecards)) {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'linecard-item';
+                        itemDiv.innerHTML = `<h3>${model}</h3><pre class="output-box">${JSON.stringify(data, null, 2)}</pre>`;
+                        linecardDetailsDiv.appendChild(itemDiv);
+                    }
+                } else {
+                    statusDiv.textContent = 'Error: ' + (result.message || 'Unknown error');
+                }
+            })
+            .catch(error => {
+                statusDiv.textContent = 'Error: ' + error.message;
+            })
+            .finally(() => {
+                runBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
