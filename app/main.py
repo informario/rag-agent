@@ -11,15 +11,26 @@ load_dotenv()
 async def extract_linecards(json_path):
     agent = get_linecard_agent(json_path)
     response = await agent.run(user_msg="Find all the linecards in this document and return their node_ids.", max_iterations=500)
-    return response
+    return str(response.response.content)
 
 async def extract_optics(json_path):
     agent, registry = get_optics_agent(json_path)
     response = await agent.run(user_msg="Find all the optics in this document and return their node_ids.", max_iterations=500)
-    return response, registry.to_dict()
+    return str(response.response.content), registry.to_dict()
 
 def parse_linecards(node_ids, json_path, pdf_path):
-    node_ids = node_ids.replace("Answer: ", "").split(",")
+    # Handle both string and AgentOutput (though extract_linecards now returns string)
+    if not isinstance(node_ids, str):
+        if hasattr(node_ids, 'response') and hasattr(node_ids.response, 'content'):
+            node_ids = str(node_ids.response.content)
+        else:
+            node_ids = str(node_ids)
+
+    # The prompt asks for "Answer: <ids>", so we need to find that part
+    if "Answer: " in node_ids:
+        node_ids = node_ids.split("Answer: ")[-1].strip()
+    
+    node_ids = node_ids.split(",")
     extractor = PDFExtractor(pdf_path, json_path)
 
     if not os.path.exists("app/database"):
@@ -71,13 +82,15 @@ async def run_extraction():
     pdf_path = "CE16800_hardware_description.pdf"
     json_path = "app/database/CE16800_hardware_description_structure.json"
 
-    #linecard_node_ids = await extract_linecards(json_path)
+    linecard_node_ids = await extract_linecards(json_path)
+    """
     response, registry = await extract_optics(json_path)
     print("##")
     print(response)
     print("##")
     print(registry)
-    #parse_linecards(linecard_node_ids, json_path, pdf_path)
+    """
+    parse_linecards(linecard_node_ids, json_path, pdf_path)
 
 
 
