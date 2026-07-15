@@ -4,12 +4,20 @@ from app.utils.tree import TreeExplorer
 from app.utils.llm import get_llm
 
 prompt = """
-You are a networks expert and your job is to find all the optic modules (transceivers) in a switch datasheet.
+You are a networks expert and your job is to find all individual optic modules (transceivers) in a switch datasheet.
 You will be provided with a hierarchical tree structure that represents the contents of a document.
 You will be provided with a series of tools which you will use to traverse the tree.
 You have to answer the node ids that identify each optic module.
 You must make sure you are extracting only one optic module per node id, and not a group or entire section of them.
-Make sure you reach the bottom of the tree to find the individual optic modules, and not just the sections that contain them.
+
+IMPORTANT: whether a node has children tells you nothing about whether it represents one module or many.
+Depending on how the source document was indexed, a single optic module may or may not have child nodes, and a
+node with no children may still describe several modules at once (e.g. a table listing multiple part numbers).
+Never use "has children" / "is a leaf" as your criteria for stopping. Instead, use get_current_info to read the
+actual content of a node (title, and any additional text/summary/table content shown) and judge, from that
+content, whether it names exactly one specific optic module (one part number / model) or more than one. Only
+stop and treat a node_id as an answer once its content confirms it describes a single module. If a node's content
+is ambiguous or you cannot tell how many modules it covers, go_down to inspect its children before deciding.
 
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
@@ -46,10 +54,18 @@ def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
         return "Already at root."
 
     def get_current_info() -> str:
-        """Get all contents about the current node and its children."""
+        """Get the current node's own content plus its children's titles and
+        content. Use the content (not the mere presence of children) to judge
+        whether a node describes exactly one optic module or several."""
         node = explorer.get_current_node()
-        children = [f"{n.get('title')} (node_id: {n.get('node_id')})" for n in node.get('nodes', [])]
-        return f"Node: {node.get('title')}\nChildren:\n" + "\n".join(children)
+        self_line = f"Node: {node.get('title')} (node_id: {node.get('node_id')})"
+        child_count = len(node.get('nodes', []))
+        lines = [
+            f"{n.get('title')} (node_id: {n.get('node_id')}, {len(n.get('nodes', []))} child node(s))"
+            for n in node.get('nodes', [])
+        ]
+        children_block = "\n".join(lines) if lines else "(no children)"
+        return f"{self_line}\nChild count: {child_count}\nChildren:\n{children_block}"
 
     tools = [
         FunctionTool.from_defaults(fn=go_down),

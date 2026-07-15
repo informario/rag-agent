@@ -1,0 +1,18 @@
+{
+  "model_name": "CEL36LQFD-GK",
+  "description": "36-port 40GE interface card (FD-GK, QSFP+)",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 36,
+      "speeds": {
+        "1x40G": 36,
+        "4x10G": 144,
+        "1x100G": 18
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical module",
+        "100GE QSFP28 optical module"
+      ]
+    }
+  }
+}

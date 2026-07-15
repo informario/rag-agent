@@ -1,12 +1,13 @@
 import json
 
+
 class TreeExplorer:
     def __init__(self, json_path):
         with open(json_path, 'r', encoding='utf-8') as f:
             self.data = json.load(f)
         self.doc_name = self.data.get('doc_name')
         self.structure = self.data.get('structure', [])
-        
+
         # Root is a virtual node representing the document
         self.root = {
             "title": self.doc_name,
@@ -15,6 +16,7 @@ class TreeExplorer:
         }
         self.current_node = self.root
         self.parent_map = {}
+        self.id_map = {"root": self.root}
         self._build_parent_map(self.root)
 
     def _build_parent_map(self, node):
@@ -22,7 +24,11 @@ class TreeExplorer:
             for child in node['nodes']:
                 if 'node_id' in child:
                     self.parent_map[child['node_id']] = node
+                    self.id_map[child['node_id']] = child
                     self._build_parent_map(child)
+
+    def get_node_by_id(self, node_id):
+        return self.id_map.get(node_id)
 
     def get_current_node(self):
         return self.current_node

@@ -1,0 +1,19 @@
+{
+  "model_name": "CEL18CQFD-A",
+  "description": "18-port 100GE interface card (FD-A, QSFP28)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 18,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 18,
+        "4x25G": 72,
+        "4x10G": 72
+      },
+      "supported_optics": [
+        "100GE QSFP28 optical modules",
+        "40GE QSFP+ optical modules"
+      ]
+    }
+  }
+}

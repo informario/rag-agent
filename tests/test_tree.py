@@ -12,7 +12,6 @@ def test_navigation():
     explorer.go_down("0005")
     assert explorer.current_node['node_id'] == "0005"
     assert explorer.current_node['title'] == "Introduction to the A610-22 Cabinet"
-
     assert explorer.go_down("0006") == False
 
     explorer.go_up()

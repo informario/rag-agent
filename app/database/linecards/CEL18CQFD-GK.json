@@ -1,0 +1,24 @@
+{
+  "model_name": "CEL18CQFD-GK",
+  "description": "18-port 100GE interface card (FD-GK, QSFP28)",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 18,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 18,
+        "4x25G": 72,
+        "4x10G": 72
+      },
+      "supported_optics": [
+        "40GE QSFP+",
+        "100GE QSFP28",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable"
+      ]
+    }
+  }
+}
