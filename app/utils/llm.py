@@ -4,6 +4,8 @@ from llama_index.llms.openrouter import OpenRouter
 from llama_index.llms.openai import OpenAI
 from llama_index.llms.anthropic import Anthropic
 
+from llama_index.core.memory import ChatSummaryMemoryBuffer
+
 def get_llm():
     load_dotenv("app/.env")
     provider = os.getenv("LLM_PROVIDER")
@@ -11,11 +13,12 @@ def get_llm():
     api_key = os.getenv("API_KEY")
 
     if provider == "openai":
-        return OpenAI(model=model, api_key=api_key)
+        return OpenAI(model=model, api_key=api_key, timeout=600.0)
     elif provider == "anthropic":
         return Anthropic(
             model=model, 
             api_key=api_key, 
+            timeout=600.0,
             default_headers={"anthropic-beta": "prompt-caching-2024-07-31"}
         )
     elif provider == "openrouter":
@@ -24,9 +27,18 @@ def get_llm():
             model=model,
             max_tokens=4096,
             context_window=131072,
+            timeout=6000.0,
             extra_headers={
                 "X-Cache-Control": "ephemeral"
             },
         )
     else:
         raise ValueError(f"Unsupported LLM provider: {provider}")
+
+def get_summary_memory(llm, token_limit=None):
+    """Returns a ChatSummaryMemoryBuffer for the given LLM."""
+    return ChatSummaryMemoryBuffer.from_defaults(
+        llm=llm,
+        token_limit=token_limit
+    )
+

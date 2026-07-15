@@ -4,34 +4,33 @@ from app.utils.tree import TreeExplorer
 from app.utils.llm import get_llm
 
 prompt = """
-You are a networks expert and your job is to find all the linecards in a switch datasheet.
+You are a networks expert and your job is to find all the optic modules (transceivers) in a switch datasheet.
 You will be provided with a hierarchical tree structure that represents the contents of a document.
 You will be provided with a series of tools which you will use to traverse the tree.
-You have to answer the node ids that identify each linecard
-You must make sure you are extracting only one linecard per node id, and not a group or entire section of them.
-Make sure you reach the bottom of the tree to find the individual linecards, and not just the sections that contain them.
-Make sure you are extracting a linecard, not a processor unit, switch fabric, or any other piece of equipment.
+You have to answer the node ids that identify each optic module.
+You must make sure you are extracting only one optic module per node id, and not a group or entire section of them.
+Make sure you reach the bottom of the tree to find the individual optic modules, and not just the sections that contain them.
 
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
 Action: <tool name>
 Action Input: {"<param>": "<value>"}
 
-When, and only when, you have identified ALL the linecards, respond in this exact format:
-Thought: I have found all the linecards.
+When, and only when, you have identified ALL the optics, respond in this exact format:
+Thought: I have found all the optic nodes.
 Answer: <node_id_1>,<node_id_2>,<node_id_3>
 
-Strict rules for the Answer line:
+Rules for the Answer line:
 - It must contain ONLY the node_ids, separated by commas.
 - No spaces, brackets, quotes, or any other characters.
 - No explanations, labels, or additional text before or after the node_ids.
 - Do not repeat a node_id.
-- If only one linecard is found, return a single node_id with no commas.
+- Only include nodes that specifically contain lists of optical/fiber transceiver modules (SFP, SFP+, QSFP, QSFP28, QSFP-DD, etc).
+- Do NOT include nodes for copper modules, those are not optics.
 """
 
 def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
     explorer = TreeExplorer(json_path)
-
     llm = get_llm()
 
     def go_down(node_id: str) -> str:
@@ -47,7 +46,7 @@ def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
         return "Already at root."
 
     def get_current_info() -> str:
-        """Get all content about the current node and its children."""
+        """Get all contents about the current node and its children."""
         node = explorer.get_current_node()
         children = [f"{n.get('title')} (node_id: {n.get('node_id')})" for n in node.get('nodes', [])]
         return f"Node: {node.get('title')}\nChildren:\n" + "\n".join(children)

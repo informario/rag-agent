@@ -1,21 +1,111 @@
 import json
 import os
 from dotenv import load_dotenv
+from app.utils.llm import get_llm, get_summary_memory
 from app.utils.pdf_extractor import PDFExtractor
 from app.agent.linecard_parser import parse_linecard
 from app.agent.linecard_extractor import get_agent as get_linecard_agent
-from app.agent.optics_extractor import get_agent as get_optics_agent
+from app.agent.optic_extractor import get_agent as get_optics_node_agent
+from app.agent.optic_parser import get_agent as get_optics_parser_agent, OpticsRegistry
 
 load_dotenv()
 
 async def extract_linecards(json_path):
     agent = get_linecard_agent(json_path)
-    response = await agent.run(user_msg="Find all the linecards in this document and return their node_ids.", max_iterations=500)
-    return str(response.response.content)
+    llm = get_llm()
+    memory = get_summary_memory(llm)
+    response = await agent.run(
+        user_msg="Find all the linecards in this document and return their node_ids.", 
+        max_iterations=500,
+        memory=memory
+    )
+    node_ids_str = str(response.response.content)
+    
+    # Save node IDs to file
+    output_dir = "app/database/linecards"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # Process the string to get a clean list
+    clean_ids = node_ids_str
+    if "Answer: " in clean_ids:
+        clean_ids = clean_ids.split("Answer: ")[-1].strip()
+    node_list = [nid.strip() for nid in clean_ids.split(",") if nid.strip()]
+    
+    with open(os.path.join(output_dir, "linecard_nodes.json"), "w", encoding="utf-8") as f:
+        json.dump(node_list, f, indent=2)
+    
+    return node_ids_str
 
-async def extract_optics(json_path, pdf_path="CE16800_hardware_description.pdf"):
-    agent, registry = get_optics_agent(json_path, pdf_path)
-    response = await agent.run(user_msg="Find all the optics in this document and return their node_ids.", max_iterations=500)
+async def extract_optics(json_path):
+    node_extractor_agent = get_optics_node_agent(json_path)
+    llm = get_llm()
+    memory = get_summary_memory(llm)
+    node_response = await node_extractor_agent.run(
+        user_msg="Find all the sections that list optic modules and return their node_ids.", 
+        max_iterations=500,
+        memory=memory
+    )
+    node_ids_str = str(node_response.response.content)
+
+    # Save node IDs to file
+    output_dir = "app/database/optics"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        
+    # Process the string to get a clean list
+    clean_ids = node_ids_str
+    if "Answer: " in clean_ids:
+        clean_ids = clean_ids.split("Answer: ")[-1].strip()
+    node_list = [nid.strip() for nid in clean_ids.split(",") if nid.strip()]
+
+    with open(os.path.join(output_dir, "optic_nodes.json"), "w", encoding="utf-8") as f:
+        json.dump(node_list, f, indent=2)
+
+    return node_ids_str
+
+async def parse_optics(node_ids, json_path, pdf_path):
+    # If node_ids is None, try to read from file
+    if node_ids is None:
+        nodes_file = "app/database/optics/optic_nodes.json"
+        if os.path.exists(nodes_file):
+            with open(nodes_file, "r", encoding="utf-8") as f:
+                node_ids = json.load(f)
+        else:
+            return {}
+
+    # Handle both string, list and AgentOutput
+    if isinstance(node_ids, list):
+        pass # Already a list
+    elif not isinstance(node_ids, str):
+        if hasattr(node_ids, 'response') and hasattr(node_ids.response, 'content'):
+            node_ids = str(node_ids.response.content)
+        else:
+            node_ids = str(node_ids)
+
+    if isinstance(node_ids, str):
+        # Find the Answer part
+        if "Answer: " in node_ids:
+            node_ids = node_ids.split("Answer: ")[-1].strip()
+        
+        node_ids = [nid.strip() for nid in node_ids.split(",") if nid.strip()]
+    
+    registry = OpticsRegistry()
+    extractor = PDFExtractor(pdf_path, json_path)
+    llm = get_llm()
+    
+    for node_id in node_ids:
+        print(f"Processing optic node: {node_id}")
+        parser_agent = get_optics_parser_agent(registry, node_id=node_id)
+        text = extractor.get_text_for_node(node_id)
+        if text and "not found" not in text:
+            memory = get_summary_memory(llm)
+            await parser_agent.run(
+                user_msg=f"Extract optics from this text:\n\n{text}", 
+                max_iterations=100,
+                memory=memory
+            )
+    
     optics_data = registry.to_dict()
     
     output_dir = "app/database/optics"
@@ -26,21 +116,33 @@ async def extract_optics(json_path, pdf_path="CE16800_hardware_description.pdf")
         json.dump(optics_data, f, indent=2)
     print(f"Saved {output_dir}/optics.json")
     
-    return str(response.response.content), optics_data
+    return optics_data
 
 async def parse_linecards(node_ids, json_path, pdf_path):
-    # Handle both string and AgentOutput (though extract_linecards now returns string)
-    if not isinstance(node_ids, str):
+    # If node_ids is None, try to read from file
+    if node_ids is None:
+        nodes_file = "app/database/linecards/linecard_nodes.json"
+        if os.path.exists(nodes_file):
+            with open(nodes_file, "r", encoding="utf-8") as f:
+                node_ids = json.load(f)
+        else:
+            return {}
+
+    # Handle both string, list and AgentOutput (though extract_linecards now returns string)
+    if isinstance(node_ids, list):
+        pass # Already a list
+    elif not isinstance(node_ids, str):
         if hasattr(node_ids, 'response') and hasattr(node_ids.response, 'content'):
             node_ids = str(node_ids.response.content)
         else:
             node_ids = str(node_ids)
 
-    # The prompt asks for "Answer: <ids>", so we need to find that part
-    if "Answer: " in node_ids:
-        node_ids = node_ids.split("Answer: ")[-1].strip()
-    
-    node_ids = [nid.strip() for nid in node_ids.split(",") if nid.strip()]
+    if isinstance(node_ids, str):
+        # The prompt asks for "Answer: <ids>", so we need to find that part
+        if "Answer: " in node_ids:
+            node_ids = node_ids.split("Answer: ")[-1].strip()
+        
+        node_ids = [nid.strip() for nid in node_ids.split(",") if nid.strip()]
     extractor = PDFExtractor(pdf_path, json_path)
 
     linecards_dir = "app/database/linecards"
