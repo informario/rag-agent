@@ -13,12 +13,22 @@ async def extract_linecards(json_path):
     response = await agent.run(user_msg="Find all the linecards in this document and return their node_ids.", max_iterations=500)
     return str(response.response.content)
 
-async def extract_optics(json_path):
-    agent, registry = get_optics_agent(json_path)
+async def extract_optics(json_path, pdf_path="CE16800_hardware_description.pdf"):
+    agent, registry = get_optics_agent(json_path, pdf_path)
     response = await agent.run(user_msg="Find all the optics in this document and return their node_ids.", max_iterations=500)
-    return str(response.response.content), registry.to_dict()
+    optics_data = registry.to_dict()
+    
+    output_dir = "app/database/optics"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    with open(os.path.join(output_dir, "optics.json"), "w", encoding="utf-8") as f:
+        json.dump(optics_data, f, indent=2)
+    print(f"Saved {output_dir}/optics.json")
+    
+    return str(response.response.content), optics_data
 
-def parse_linecards(node_ids, json_path, pdf_path):
+async def parse_linecards(node_ids, json_path, pdf_path):
     # Handle both string and AgentOutput (though extract_linecards now returns string)
     if not isinstance(node_ids, str):
         if hasattr(node_ids, 'response') and hasattr(node_ids.response, 'content'):
@@ -33,8 +43,9 @@ def parse_linecards(node_ids, json_path, pdf_path):
     node_ids = [nid.strip() for nid in node_ids.split(",") if nid.strip()]
     extractor = PDFExtractor(pdf_path, json_path)
 
-    if not os.path.exists("app/database"):
-        os.makedirs("app/database")
+    linecards_dir = "app/database/linecards"
+    if not os.path.exists(linecards_dir):
+        os.makedirs(linecards_dir)
 
     parsed_linecards = {}
     for node_id in node_ids:
@@ -45,7 +56,7 @@ def parse_linecards(node_ids, json_path, pdf_path):
             json_response = parse_linecard(text)
 
             # Save raw response anyway to avoid data loss (API cost)
-            raw_filename = f"app/database/raw_{node_id}.txt"
+            raw_filename = os.path.join(linecards_dir, f"raw_{node_id}.txt")
             with open(raw_filename, 'w', encoding='utf-8') as f:
                 f.write(json_response)
 
@@ -63,7 +74,7 @@ def parse_linecards(node_ids, json_path, pdf_path):
                 data = json.loads(cleaned_response)
                 model_name = data.get("model_name")
                 if model_name:
-                    filename = f"app/database/{model_name}.json"
+                    filename = os.path.join(linecards_dir, f"{model_name}.json")
                     with open(filename, 'w', encoding='utf-8') as f:
                         json.dump(data, f, indent=2)
                     print(f"Saved {filename}")
@@ -79,26 +90,3 @@ def parse_linecards(node_ids, json_path, pdf_path):
         else:
             print(f"Text extraction failed for node {node_id}")
     return parsed_linecards
-
-
-async def run_extraction():
-    pdf_path = "CE16800_hardware_description.pdf"
-    json_path = "app/database/CE16800_hardware_description_structure.json"
-
-    linecard_node_ids = await extract_linecards(json_path)
-    
-    response, registry = await extract_optics(json_path)
-    """
-    print("##")
-    print(response)
-    print("##")
-    print(registry)
-    """
-    parse_linecards(linecard_node_ids, json_path, pdf_path)
-
-
-
-
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(run_extraction())

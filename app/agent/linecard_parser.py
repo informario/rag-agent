@@ -1,8 +1,4 @@
-import os
-from dotenv import load_dotenv
-from llama_index.llms.openrouter import OpenRouter
-from llama_index.llms.openai import OpenAI
-from llama_index.llms.anthropic import Anthropic
+from app.utils.llm import get_llm
 
 prompt = """
 You are a networks expert. You will be given a slice of a hardware datasheet PDF (in English) describing one or more linecards. Your job is to extract the specifications of the ONE linecard that is completely and fully described within this slice, and output them as JSON.
@@ -57,26 +53,6 @@ Example of expected output format (this is illustrative only — port types, key
   }
 }
 """
-
-def get_llm():
-    load_dotenv("app/.env")
-    provider = os.getenv("LLM_PROVIDER")
-    model = os.getenv("MODEL")
-    api_key = os.getenv("API_KEY")
-
-    if provider == "openai":
-        return OpenAI(model=model, api_key=api_key)
-    elif provider == "anthropic":
-        return Anthropic(model=model, api_key=api_key)
-    elif provider == "openrouter":
-        return OpenRouter(
-            api_key=api_key,
-            model=model,
-            max_tokens=4096,
-            context_window=131072,
-        )
-    else:
-        raise ValueError(f"Unsupported LLM provider: {provider}")
 
 def parse_linecard(text: str):
     llm = get_llm()

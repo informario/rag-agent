@@ -1,12 +1,7 @@
-import asyncio
-import os
-from dotenv import load_dotenv
-from llama_index.core.agent.workflow import AgentWorkflow, ReActAgent
+from llama_index.core.agent.workflow import AgentWorkflow
 from llama_index.core.tools import FunctionTool
-from llama_index.llms.openrouter import OpenRouter
-from llama_index.llms.openai import OpenAI
-from llama_index.llms.anthropic import Anthropic
 from app.utils.tree import TreeExplorer
+from app.utils.llm import get_llm
 
 prompt = """
 You are a networks expert and your job is to find all the linecards in a switch datasheet.
@@ -30,27 +25,7 @@ Strict rules for the Answer line:
 - If only one linecard is found, return a single node_id with no commas.
 """
 
-def get_llm():
-    load_dotenv("app/.env")
-    provider = os.getenv("LLM_PROVIDER")
-    model = os.getenv("MODEL")
-    api_key = os.getenv("API_KEY")
-
-    if provider == "openai":
-        return OpenAI(model=model, api_key=api_key)
-    elif provider == "anthropic":
-        return Anthropic(model=model, api_key=api_key)
-    elif provider == "openrouter":
-        return OpenRouter(
-            api_key=api_key,
-            model=model,
-            max_tokens=4096,
-            context_window=131072,
-        )
-    else:
-        raise ValueError(f"Unsupported LLM provider: {provider}")
-
-def get_agent(json_path: str = "app/database/CE16800_hardware_description_structure.json"):
+def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
     explorer = TreeExplorer(json_path)
 
     llm = get_llm()

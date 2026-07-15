@@ -35,14 +35,9 @@ async def process():
     pdf_file.save(pdf_path)
     
     try:
-        # Run extraction pipeline
         linecard_node_ids = await extract_linecards(json_path)
-        optics_response, optics_data = await extract_optics(json_path)
-        
-        # Parse linecards
-        # Note: parse_linecards is sync, so it's fine to call it directly here
-        # but since we are in an async route, it's okay.
-        linecards = parse_linecards(linecard_node_ids, json_path, pdf_path)
+        optics_response, optics_data = await extract_optics(json_path, pdf_path)
+        linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
         
         return jsonify({
             'status': 'completed',
