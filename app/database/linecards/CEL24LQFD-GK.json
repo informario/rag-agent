@@ -17,7 +17,12 @@
         "QSFP+ to 4*SFP+ high-speed cable",
         "100GE QSFP28 optical modules",
         "QSFP28 to QSFP28 AOC cable"
-      ]
+      ],
+      "explicitley_supported_speeds": {
+        "1x40G": 24,
+        "4x10G": 96,
+        "1x100G": 12
+      }
     }
   }
 }

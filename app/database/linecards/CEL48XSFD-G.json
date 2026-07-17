@@ -16,7 +16,10 @@
         "SFP+ to SFP+ high-speed cable",
         "SFP GE optical modules",
         "1000BASE-T copper modules"
-      ]
+      ],
+      "explicitley_supported_speeds": {
+        "1x10GE": 48
+      }
     }
   }
 }

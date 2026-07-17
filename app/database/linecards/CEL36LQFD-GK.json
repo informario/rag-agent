@@ -12,7 +12,12 @@
       "supported_optics": [
         "40GE QSFP+ optical module",
         "100GE QSFP28 optical module"
-      ]
+      ],
+      "explicitley_supported_speeds": {
+        "1x40G": 36,
+        "4x10G": 144,
+        "1x100G": 18
+      }
     }
   }
 }

@@ -18,7 +18,13 @@
         "QSFP+ to 4*SFP+ AOC cable",
         "QSFP+ to QSFP+ high-speed cable",
         "QSFP+ to 4*SFP+ high-speed cable"
-      ]
+      ],
+      "explicitley_supported_speeds": {
+        "1x40G": 36,
+        "4x10G": 144,
+        "1x100G": 36,
+        "4x25G": 144
+      }
     }
   }
 }

@@ -18,7 +18,11 @@
         "QSFP28 to QSFP28 AOC cable",
         "QSFP28 to QSFP28 high-speed cable",
         "QSFP28 to 4*SFP28 high-speed cable"
-      ]
+      ],
+      "explicitley_supported_speeds": {
+        "4x10G": 144,
+        "1x100G": 18
+      }
     }
   }
 }

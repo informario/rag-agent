@@ -13,7 +13,8 @@
       "supported_optics": [
         "40GE QSFP+",
         "100GE QSFP28"
-      ]
+      ],
+      "explicitley_supported_speeds": {}
     }
   }
 }
