@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
-from app.main import extract_linecards, extract_optics, parse_optics, parse_linecards
+from app.main import extract_linecards, extract_optics, parse_optics, parse_linecards, run_optics_crosscheck_on_data
 
 app = Flask(__name__, template_folder='templates')
 app.config['UPLOAD_FOLDER'] = 'app/uploads'
@@ -40,6 +40,9 @@ async def process():
         
         optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
         linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
+        
+        # Run optics cross-check before returning the result
+        linecards = run_optics_crosscheck_on_data(linecards)
         
         return jsonify({
             'status': 'completed',

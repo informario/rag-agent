@@ -7,6 +7,7 @@ from app.agent.linecard_parser import parse_linecard
 from app.agent.linecard_extractor import get_agent as get_linecard_agent
 from app.agent.optic_extractor import get_agent as get_optics_node_agent
 from app.agent.optic_parser import get_agent as get_optics_parser_agent, OpticsRegistry
+from app.agent.optics_crosscheck import load_optics_data, load_ethernet_standards, process_linecard
 
 load_dotenv()
 
@@ -192,3 +193,28 @@ async def parse_linecards(node_ids, json_path, pdf_path):
         else:
             print(f"Text extraction failed for node {node_id}")
     return parsed_linecards
+
+def run_optics_crosscheck_on_data(linecards_data):
+    """
+    Applies the optics cross-check to the provided linecards data.
+    Updates the data in-place and also updates the JSON files on disk.
+    """
+    try:
+        optics_data = load_optics_data()
+        ethernet_standards = load_ethernet_standards()
+        
+        linecards_dir = os.path.join("app", "database", "linecards")
+        
+        for model_name, data in linecards_data.items():
+            print(f"Applying cross-check to {model_name}...")
+            updated_data = process_linecard(data, optics_data, ethernet_standards)
+            
+            # Save the updated data back to disk
+            filename = os.path.join(linecards_dir, f"{model_name}.json")
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(updated_data, f, indent=2)
+                
+        return linecards_data
+    except Exception as e:
+        print(f"Error during optics cross-check: {e}")
+        return linecards_data

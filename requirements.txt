@@ -6,3 +6,4 @@ llama-index-llms-anthropic
 pytest
 pypdf
 pymupdf
+flask
