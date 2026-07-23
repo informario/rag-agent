@@ -2,7 +2,7 @@
   "model_name": "CEL36CQFD-G",
   "description": "36-Port 100GE Interface Card (FD-G, QSFP28)",
   "port_configuration": {
-    "qsfp28_qsfpplus": {
+    "qsfp28_100ge": {
       "port_count": 36,
       "speeds": {
         "1x100G": 36,

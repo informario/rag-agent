@@ -10,8 +10,13 @@
         "1x100G": 12
       },
       "supported_optics": [
-        "40GE QSFP+ optical module",
-        "100GE QSFP28 optical module"
+        "40GE QSFP+ optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high\u2011speed cable",
+        "QSFP+ to 4*SFP+ high\u2011speed cable",
+        "100GE QSFP28 optical modules",
+        "QSFP28 to QSFP28 AOC cable"
       ],
       "explicitley_supported_speeds": {
         "1x40G": 24,

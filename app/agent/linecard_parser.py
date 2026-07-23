@@ -12,7 +12,7 @@ Extract the following fields:
   - speeds: a dictionary of every supported speed and breakout combination mentioned in the text, and the resulting number of ports after applying that speed/breakout.
     - Format each key as "<n>x<speed>", where <n> is the number of resulting ports and <speed> is the speed per port (e.g. "1x800G", "4x100G", "4x10G"). Use "1x<speed>" for a native, non-broken-out speed (e.g. "1x400G"), not just "<speed>".
     - The value is always the total COUNT of resulting ports for that combination (i.e., after breakout, not before).
-  - supported_optics: list of optical module names supported for that port type, exactly as they appear in the text.
+  - supported_optics: list of optical module names supported for that port type, exactly as they appear in the text (including speed, format, and the term "optical modules").
 
 Rules:
 - Do not invent, guess, or infer any information that is not explicitly present in the text. If a field or value cannot be found in the slice, set it to null (or an empty list [] for supported_optics if no optics are mentioned).

@@ -6,17 +6,12 @@
       "port_count": 36,
       "speeds": {
         "1x40G": 36,
-        "1x100G": 18,
-        "4x10G": 144
+        "4x10G": 144,
+        "1x100G": 18
       },
       "supported_optics": [
-        "40GE QSFP+ optical module",
-        "QSFP+ to QSFP+ AOC cable",
-        "QSFP+ to 4\u00d7SFP+ AOC cable",
-        "QSFP+ to QSFP+ high\u2011speed cable",
-        "QSFP+ to 4\u00d7SFP+ high\u2011speed cable",
-        "100GE QSFP28 optical module",
-        "QSFP28 to QSFP28 AOC cable"
+        "40GE QSFP+ optical modules",
+        "100GE QSFP28 optical modules"
       ],
       "explicitley_supported_speeds": {
         "1x40G": 36,

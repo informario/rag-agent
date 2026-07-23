@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
 from app.main import extract_linecards, extract_optics, parse_optics, parse_linecards, run_optics_crosscheck_on_data
@@ -35,9 +36,9 @@ async def process():
     pdf_file.save(pdf_path)
     
     try:
-        linecard_node_ids = await extract_linecards(json_path)
-        optics_node_ids = await extract_optics(json_path)
-        
+        linecard_node_ids = None#await extract_linecards(json_path)
+        optics_node_ids = None#await extract_optics(json_path)
+            
         optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
         linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
         

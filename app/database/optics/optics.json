@@ -50,12 +50,16 @@
     },
     "10GE SFP+ Optical Modules": {
       "modules": [
+        "02313URK",
+        "02318170",
         "OMXD30000",
         "OSX010000",
+        "OSX040N01",
         "SFP-10G-BXD1",
         "SFP-10G-BXU1",
         "SFP-10G-ER",
         "SFP-10G-ER-1310",
+        "SFP-10G-ER-SM1270-BIDI",
         "SFP-10G-ER-SM1330-BIDI",
         "SFP-10G-LR",
         "SFP-10G-LR-MP",
@@ -82,12 +86,14 @@
         "10GBASE-iLR"
       ],
       "nodes": [
+        "0276",
         "0277",
         "0278",
         "0279",
         "0280",
         "0281",
         "0282",
+        "0283",
         "0284",
         "0285",
         "0286",
@@ -107,29 +113,48 @@
         "0300"
       ]
     },
+    "SFP+ Optical Modules": {
+      "modules": [
+        "OMXD30000"
+      ],
+      "standards": [
+        "10GBASE-SR"
+      ],
+      "nodes": [
+        "0277"
+      ]
+    },
     "40GE QSFP+ Optical Modules": {
       "modules": [
         "QSFP-40G-ER4",
+        "QSFP-40G-LR4",
+        "QSFP-40G-LR4-Lite",
         "QSFP-40G-LX4-MM-E",
         "QSFP-40G-SDLC-PAM",
         "QSFP-40G-SR-BD",
         "QSFP-40G-eSDLC-PAM",
         "QSFP-40G-eSDLC-PAM-G2",
-        "QSFP-40G-iSR4"
+        "QSFP-40G-iSR4",
+        "QSFP-40G-iSR4-MP"
       ],
       "standards": [
         "10GBASE-USR",
         "40GBASE-BIDI",
         "40GBASE-ER4",
-        "40GBASE-ESDLC-PAM4",
+        "40GBASE-LR4",
+        "40GBASE-LR4 Lite",
         "40GBASE-LX4",
         "40GBASE-SDLC-PAM4",
         "40GBASE-SR4",
-        "40GBASE-eSDLC-PAM4"
+        "40GBASE-eSDLC-PAM4",
+        "40GBase-eSDLC-PAM4"
       ],
       "nodes": [
         "0302",
-        "0307",
+        "0306",
+        "0308",
+        "0310",
+        "0312",
         "0313",
         "0314",
         "0315",
@@ -162,9 +187,8 @@
         "0303",
         "0304",
         "0305",
-        "0306",
         "0307",
-        "0310",
+        "0309",
         "0311",
         "0312",
         "0317",
@@ -174,64 +198,39 @@
     },
     "QSFP+ Optical Modules": {
       "modules": [
-        "QSFP-40G-LR4-Lite",
-        "QSFP-40G-eSR4",
-        "QSFP-40G-iSR4-MP"
+        "QSFP-40G-eSR4"
       ],
       "standards": [
         "10GBASE-SR",
-        "10GBASE-USR",
-        "40GBASE-LR4 Lite",
-        "40GBASE-SR4",
         "40GBASE-eSR4"
       ],
       "nodes": [
-        "0304",
-        "0308",
-        "0312"
+        "0304"
       ]
     },
     "100GE QSFP28 Optical Modules": {
       "modules": [
-        "QSFP28-100G-LR4"
-      ],
-      "standards": [
-        "100GBASE-LR4"
-      ],
-      "nodes": [
-        "0322"
-      ]
-    },
-    "QSFP28 Optical Modules": {
-      "modules": [
-        "QSFP-100G-CWDM4",
-        "QSFP-100G-LX4-MM",
-        "QSFP-100G-SWDM4",
+        "QSFP-100G-4WDM-40",
         "QSFP-100G-eBIDI-G2",
-        "QSFP28-100G-LR4",
-        "QSFP28-100G-SR4"
+        "QSFP-100G-eCWDM4",
+        "QSFP28-100G-LR4 (02311KNU)",
+        "QSFP28-100G-LR4 (02313URT)"
       ],
       "standards": [
         "100G-BIDI",
-        "100G-LX4",
-        "100G-SWDM4",
-        "100GBASE-CWDM4",
+        "100GBASE-4WDM",
         "100GBASE-LR4",
-        "100GBASE-SR4"
+        "100GBASE-eCWDM4"
       ],
       "nodes": [
-        "0323",
-        "0325",
-        "0326",
-        "0340",
-        "0344",
-        "0345",
+        "0322",
+        "0330",
+        "0334",
         "0346"
       ]
     },
     "100G QSFP28 Optical Modules": {
       "modules": [
-        "QSFP-100G-4WDM-40",
         "QSFP-100G-BIDI-G2",
         "QSFP-100G-C4-Lite-E",
         "QSFP-100G-CWDM4",
@@ -243,9 +242,9 @@
         "QSFP-100G-LR4-Lite",
         "QSFP-100G-LX4-MM",
         "QSFP-100G-SWDM4",
-        "QSFP-100G-eCWDM4",
         "QSFP28-100G-BIDI",
         "QSFP28-100G-DR",
+        "QSFP28-100G-LR4",
         "QSFP28-100G-PSM4",
         "QSFP28-100G-SR4",
         "QSFP28-100G-SR4-MP"
@@ -256,7 +255,6 @@
         "100G-CWDM4",
         "100G-LX4",
         "100G-SWDM4",
-        "100GBASE-4WDM",
         "100GBASE-CWDM4",
         "100GBASE-DR",
         "100GBASE-ER4",
@@ -264,26 +262,22 @@
         "100GBASE-LR1",
         "100GBASE-LR4",
         "100GBASE-PSM4",
-        "100GBASE-SR4",
-        "100GBASE-eCWDM4"
+        "100GBASE-SR4"
       ],
       "nodes": [
+        "0323",
         "0324",
         "0325",
-        "0326",
         "0327",
         "0328",
         "0329",
-        "0330",
         "0331",
         "0332",
         "0333",
-        "0334",
         "0335",
         "0336",
         "0337",
         "0338",
-        "0339",
         "0340",
         "0341",
         "0342",
@@ -292,15 +286,24 @@
         "0345"
       ]
     },
-    "100G QSFP28 Modules": {
+    "QSFP28 Optical Modules": {
       "modules": [
+        "QSFP-100G-CWDM4",
+        "QSFP-100G-LX4-MM",
+        "QSFP-100G-SWDM4",
         "QSFP28-100G-SR4"
       ],
       "standards": [
+        "100G-LX4",
+        "100G-SWDM4",
+        "100GBASE-CWDM4",
         "100GBASE-SR4"
       ],
       "nodes": [
-        "0326"
+        "0326",
+        "0339",
+        "0344",
+        "0345"
       ]
     }
   }

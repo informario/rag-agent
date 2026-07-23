@@ -2,7 +2,7 @@
   "model_name": "CEL36LQFD1-G",
   "description": "36-port 40GE interface card (FD1-G, QSFP+)",
   "port_configuration": {
-    "qsfp28_qsfpplus": {
+    "qsfp28_qsfp_plus_40ge": {
       "port_count": 36,
       "speeds": {
         "1x40G": 36,
@@ -10,12 +10,12 @@
         "1x100G": 18
       },
       "supported_optics": [
-        "40GE QSFP+ optical module",
-        "100GE QSFP28 optical module",
-        "QSFP+ to QSFP+ AOC cable",
+        "40GE QSFP+ optical modules",
+        "QSFP+ to AOC cable",
         "QSFP+ to 4*SFP+ AOC cable",
         "QSFP+ to QSFP+ high-speed cable",
         "QSFP+ to 4*SFP+ high-speed cable",
+        "100GE QSFP28 optical modules",
         "QSFP28 to QSFP28 AOC cable"
       ],
       "explicitley_supported_speeds": {
