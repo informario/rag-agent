@@ -2,30 +2,23 @@
   "model_name": "CEL36CQFD-A",
   "description": "36-port 100GE interface card (FD-A, QSFP28)",
   "port_configuration": {
-    "qsfp28": {
+    "qsfp28_100GE": {
       "port_count": 36,
       "speeds": {
-        "1x100G": 36,
-        "1x40G": 36,
-        "4x25G": 144,
-        "4x10G": 144
+        "1x100GE": 36,
+        "1x40GE": 36,
+        "4x25GE": 144,
+        "4x10GE": 144
       },
       "supported_optics": [
         "40GE QSFP+ optical modules",
-        "100GE QSFP28 optical modules",
-        "QSFP+ to QSFP+ AOC cable",
-        "QSFP28 to QSFP28 AOC cable",
-        "QSFP+ to 4*SFP+ AOC cable",
-        "QSFP+ to QSFP+ high-speed cable",
-        "QSFP+ to 4*SFP+ high-speed cable",
-        "QSFP28 to QSFP28 high-speed cable",
-        "QSFP28 to 4*SFP28 high-speed cable"
+        "100GE QSFP28 optical modules"
       ],
       "explicitley_supported_speeds": {
-        "1x40G": 36,
-        "4x10G": 144,
-        "1x100G": 36,
-        "4x25G": 144
+        "1x40GE": 36,
+        "4x10GE": 144,
+        "1x100GE": 36,
+        "4x25GE": 144
       }
     }
   }

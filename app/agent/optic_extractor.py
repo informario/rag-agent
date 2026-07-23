@@ -4,20 +4,14 @@ from app.utils.tree import TreeExplorer
 from app.utils.llm import get_llm
 
 prompt = """
-You are a networks expert and your job is to find all individual optic modules (transceivers) in a switch datasheet.
+You are a networks expert and your job is to find all individual optic modules models in a switch datasheet.
 You will be provided with a hierarchical tree structure that represents the contents of a document.
 You will be provided with a series of tools which you will use to traverse the tree.
 You have to answer the node ids that identify each optic module.
 You must make sure you are extracting only one optic module per node id, and not a group or entire section of them.
 
-IMPORTANT: whether a node has children tells you nothing about whether it represents one module or many.
-Depending on how the source document was indexed, a single optic module may or may not have child nodes, and a
-node with no children may still describe several modules at once (e.g. a table listing multiple part numbers).
-Never use "has children" / "is a leaf" as your criteria for stopping. Instead, use get_current_info to read the
-actual content of a node (title, and any additional text/summary/table content shown) and judge, from that
-content, whether it names exactly one specific optic module (one part number / model) or more than one. Only
-stop and treat a node_id as an answer once its content confirms it describes a single module. If a node's content
-is ambiguous or you cannot tell how many modules it covers, go_down to inspect its children before deciding.
+If a node's content is ambiguous or you cannot tell how many modules it covers, go_down to inspect its children before deciding.
+Make sure to generate a node_id for each part number found. There may be several part numbers for a single category
 
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>

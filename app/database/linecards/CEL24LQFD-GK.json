@@ -2,7 +2,7 @@
   "model_name": "CEL24LQFD-GK",
   "description": "24-port 40GE interface card (FD-GK, QSFP+)",
   "port_configuration": {
-    "qsfp28_qsfpplus": {
+    "qsfp28_qsfp_plus": {
       "port_count": 24,
       "speeds": {
         "1x40G": 24,
