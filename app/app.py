@@ -6,7 +6,7 @@ from app.main import extract_linecards, extract_optics, parse_optics, parse_line
 
 app = Flask(__name__, template_folder='templates')
 app.config['UPLOAD_FOLDER'] = 'app/uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
+app.config['MAX_CONTENT_LENGTH'] = 256 * 1024 * 1024  # 256MB limit
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
@@ -36,8 +36,8 @@ async def process():
     pdf_file.save(pdf_path)
     
     try:
-        linecard_node_ids = None#await extract_linecards(json_path)
-        optics_node_ids = None#await extract_optics(json_path)
+        linecard_node_ids = None #await extract_linecards(json_path)
+        optics_node_ids = await extract_optics(json_path)
             
         optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
         linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)

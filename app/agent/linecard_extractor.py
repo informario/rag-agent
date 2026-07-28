@@ -12,6 +12,14 @@ You must make sure you are extracting only one linecard per node id, and not a g
 Make sure you reach the bottom of the tree to find the individual linecards, and not just the sections that contain them.
 Make sure you are extracting a linecard, not a processor unit, switch fabric, or any other piece of equipment.
 
+CRITICAL RULE ABOUT LEAVES:
+- A node_id is only a valid linecard answer if get_current_info reports it as a LEAF node (no children).
+- If a node has children, it is a GROUP/FAMILY, not a linecard — you MUST go_down into every child
+  before considering that branch finished, even if the group's title looks like a product name
+  (e.g. "LPUF-1T" is often a family name, not the individual linecard).
+- Never include a node_id in your final Answer unless you have personally visited it with go_down
+  and confirmed via get_current_info that it has no children.
+
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
 Action: <tool name>
@@ -49,8 +57,13 @@ def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
     def get_current_info() -> str:
         """Get all content about the current node and its children."""
         node = explorer.get_current_node()
-        children = [f"{n.get('title')} (node_id: {n.get('node_id')})" for n in node.get('nodes', [])]
-        return f"Node: {node.get('title')}\nChildren:\n" + "\n".join(children)
+        children = node.get('nodes', [])
+        if not children:
+            return f"Node: {node.get('title')}\nThis is a LEAF node (no children). It can be a valid linecard answer."
+        child_list = [f"{n.get('title')} (node_id: {n.get('node_id')})" for n in children]
+        return (f"Node: {node.get('title')}\n"
+                f"This is a GROUP node with {len(children)} children — it is NOT itself a valid linecard.\n"
+                f"Children:\n" + "\n".join(child_list))
 
     tools = [
         FunctionTool.from_defaults(fn=go_down),

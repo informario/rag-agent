@@ -1,0 +1,39 @@
+{
+  "model_name": "CR8DE8KE8ND1",
+  "description": "8-Port 400GBase-QSFP-DD + 8-Port 100GBase-QSFP28 Integrated Line Processing Unit",
+  "port_configuration": {
+    "qsfp_dd_400": {
+      "port_count": 8,
+      "speeds": {
+        "1x400G": 8,
+        "1x200G": 8,
+        "1x100G": 8,
+        "2x100G": 16,
+        "4x100G": 32
+      },
+      "supported_optics": [
+        "400Gbps QSFP-DD Optical Module",
+        "200Gbps QSFP-DD Optical Module",
+        "100Gbps QSFP-DD Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "qsfp28_100": {
+      "port_count": 8,
+      "speeds": {
+        "1x100G": 8,
+        "1x50G": 8,
+        "1x40G": 8,
+        "4x25G": 32,
+        "4x10G": 32
+      },
+      "supported_optics": [
+        "100Gbps QSFP28 Optical Module",
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "50Gbps QSFP28 BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

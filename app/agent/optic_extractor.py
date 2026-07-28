@@ -10,8 +10,12 @@ You will be provided with a series of tools which you will use to traverse the t
 You have to answer the node ids that identify each optic module.
 You must make sure you are extracting only one optic module per node id, and not a group or entire section of them.
 
-If a node's content is ambiguous or you cannot tell how many modules it covers, go_down to inspect its children before deciding.
-Make sure to generate a node_id for each part number found. There may be several part numbers for a single category
+CRITICAL RULE ABOUT LEAVES:
+- A node_id is only a valid optic module answer if get_current_info reports it as a LEAF node (no children).
+- If a node has children, it is a GROUP/FAMILY, not an individual optic module — you MUST go_down into every child
+  before considering that branch finished, even if the group's title looks like a part number.
+- Never include a node_id in your final Answer unless you have personally visited it with go_down
+  and confirmed via get_current_info that it has no children.
 
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
@@ -48,18 +52,15 @@ def get_agent(json_path: str = "CE16800_hardware_description_structure.json"):
         return "Already at root."
 
     def get_current_info() -> str:
-        """Get the current node's own content plus its children's titles and
-        content. Use the content (not the mere presence of children) to judge
-        whether a node describes exactly one optic module or several."""
+        """Get all content about the current node and its children."""
         node = explorer.get_current_node()
-        self_line = f"Node: {node.get('title')} (node_id: {node.get('node_id')})"
-        child_count = len(node.get('nodes', []))
-        lines = [
-            f"{n.get('title')} (node_id: {n.get('node_id')}, {len(n.get('nodes', []))} child node(s))"
-            for n in node.get('nodes', [])
-        ]
-        children_block = "\n".join(lines) if lines else "(no children)"
-        return f"{self_line}\nChild count: {child_count}\nChildren:\n{children_block}"
+        children = node.get('nodes', [])
+        if not children:
+            return f"Node: {node.get('title')}\nThis is a LEAF node (no children). It can be a valid optic module answer."
+        child_list = [f"{n.get('title')} (node_id: {n.get('node_id')})" for n in children]
+        return (f"Node: {node.get('title')}\n"
+                f"This is a GROUP node with {len(children)} children — it is NOT itself a valid optic module.\n"
+                f"Children:\n" + "\n".join(child_list))
 
     tools = [
         FunctionTool.from_defaults(fn=go_down),

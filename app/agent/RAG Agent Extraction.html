@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:5001/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Agent Extraction</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 20px;
+            width: 100%;
+            padding: 50px;
+            text-align: center;
+            font: 20pt bold arial;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .drop-zone.over { border-color: #333; color: #333; }
+        #files-list { margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        #status { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>RAG Agent Extraction Pipeline</h1>
+    <div id="drop-zone" class="drop-zone">
+        Drag and drop JSON and PDF files here
+    </div>
+    <div id="files-list"><div>JSON: CE16800_hardware_description_structure.json</div><div>PDF: CE16800_hardware_description.pdf</div></div>
+    <button id="run-btn">Run Pipeline</button>
+    <div id="status">Processing completed successfully.</div>
+    <div id="results-container" style="display: block;">
+        <h2>Linecard Node IDs</h2>
+        <div id="linecard-nodes" class="output-box">0130,0144,0149,0153,0154,0159,0163,0164,0168,0173,0177,0180,0185,0188</div>
+
+        <h2>Optics JSON</h2>
+        <pre id="optics-json" class="output-box">{
+  "optics": {
+    "100GE QSFP28 Optical Modules": {
+      "modules": [
+        "QSFP28-100G-LR4"
+      ],
+      "nodes": [
+        "0321"
+      ],
+      "standards": [
+        "100GBASE-LR4"
+      ]
+    },
+    "10GE SFP+ Optical Modules": {
+      "modules": [
+        "OMXD30000"
+      ],
+      "nodes": [
+        "0275"
+      ],
+      "standards": [
+        "10GBASE-SR"
+      ]
+    },
+    "40GE QSFP+ Optical Modules": {
+      "modules": [
+        "QSFP-40G-ER4"
+      ],
+      "nodes": [
+        "0301"
+      ],
+      "standards": [
+        "40GBASE-ER4"
+      ]
+    },
+    "GE eSFP Optical Modules": {
+      "modules": [
+        "eSFP-GE-SX-MM850"
+      ],
+      "nodes": [
+        "0251"
+      ],
+      "standards": [
+        "1000BASE-SX"
+      ]
+    }
+  }
+}</pre>
+
+        <h2>Linecard JSONs</h2>
+        <div id="linecard-details"><div class="linecard-item"><h3>CEL18CQFD-A</h3><pre class="output-box">{
+  "description": "18-port 100GE interface card (FD-A, QSFP28)",
+  "model_name": "CEL18CQFD-A",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 18,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 18,
+        "4x10G": 72,
+        "4x25G": 72
+      },
+      "supported_optics": [
+        "100GE QSFP28 optical modules",
+        "40GE QSFP+ optical modules"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL18CQFD-G</h3><pre class="output-box">{
+  "description": "18-Port 100GE Interface Card (FD-G, QSFP28)",
+  "model_name": "CEL18CQFD-G",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 18,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 18,
+        "4x10G": 72,
+        "4x25G": 72
+      },
+      "supported_optics": [
+        "40GE QSFP+",
+        "100GE QSFP28"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL18CQFD-GK</h3><pre class="output-box">{
+  "description": "18-port 100GE interface card (FD-GK, QSFP28)",
+  "model_name": "CEL18CQFD-GK",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 18,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 18,
+        "4x10G": 72,
+        "4x25G": 72
+      },
+      "supported_optics": [
+        "40GE QSFP+",
+        "100GE QSFP28",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL24LQFD-G</h3><pre class="output-box">{
+  "description": "24-Port 40GE Interface Card (FD-G, QSFP+)",
+  "model_name": "CEL24LQFD-G",
+  "port_configuration": {
+    "qsfp28_qsfp_plus": {
+      "port_count": 24,
+      "speeds": {
+        "1x100G": 12,
+        "1x40G": 24,
+        "4x10G": 96
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical module",
+        "100GE QSFP28 optical module"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL24LQFD-GK</h3><pre class="output-box">{
+  "description": "24-port 40GE interface card (FD-GK, QSFP+)",
+  "model_name": "CEL24LQFD-GK",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 24,
+      "speeds": {
+        "1x100G": 12,
+        "1x40G": 24,
+        "4x10G": 96
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable",
+        "100GE QSFP28 optical modules",
+        "QSFP28 to QSFP28 AOC cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL24LQFD1-G</h3><pre class="output-box">{
+  "description": "24-port 40GE interface card (FD1-G, QSFP+)",
+  "model_name": "CEL24LQFD1-G",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 24,
+      "speeds": {
+        "1x100G": 12,
+        "1x40G": 24,
+        "4x10G": 96
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable",
+        "100GE QSFP28 optical modules",
+        "QSFP28 to QSFP28 AOC cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36CQFD-A</h3><pre class="output-box">{
+  "description": "36-port 100GE interface card (FD-A, QSFP28)",
+  "model_name": "CEL36CQFD-A",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 36,
+        "1x40G": 36,
+        "4x10G": 144,
+        "4x25G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "100GE QSFP28 optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable",
+        "QSFP28 to QSFP28 high-speed cable",
+        "QSFP28 to 4*SFP28 high-speed cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36CQFD-G</h3><pre class="output-box">{
+  "description": "36-Port 100GE Interface Card (FD-G, QSFP28)",
+  "model_name": "CEL36CQFD-G",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 36,
+        "1x40G": 36,
+        "4x10G": 144,
+        "4x25G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "100GE QSFP28 optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36CQFD-GK</h3><pre class="output-box">{
+  "description": "36-port 100GE interface card (FD-GK, QSFP28)",
+  "model_name": "CEL36CQFD-GK",
+  "port_configuration": {
+    "qsfp28_100ge": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 36,
+        "1x40G": 36,
+        "4x10G": 144,
+        "4x25G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "100GE QSFP28 optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36LQFD-A</h3><pre class="output-box">{
+  "description": "36-port 40GE interface card (FD-A, QSFP+)",
+  "model_name": "CEL36LQFD-A",
+  "port_configuration": {
+    "qsfp28_qsfp_plus": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 36,
+        "4x10G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable",
+        "100GE QSFP28 optical modules",
+        "QSFP28 to QSFP28 AOC cable",
+        "QSFP28 to QSFP28 high-speed cable",
+        "QSFP28 to 4*SFP28 high-speed cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36LQFD-G</h3><pre class="output-box">{
+  "description": "36-Port 40GE Interface Card (FD-G, QSFP+)",
+  "model_name": "CEL36LQFD-G",
+  "port_configuration": {
+    "qsfp28_qsfp_plus": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 36,
+        "4x10G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical module",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4×SFP+ AOC cable",
+        "QSFP+ to QSFP+ high‑speed cable",
+        "QSFP+ to 4×SFP+ high‑speed cable",
+        "100GE QSFP28 optical module",
+        "QSFP28 to QSFP28 AOC cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36LQFD-GK</h3><pre class="output-box">{
+  "description": "36-port 40GE interface card (FD-GK, QSFP+)",
+  "model_name": "CEL36LQFD-GK",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 36,
+        "4x10G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical module",
+        "100GE QSFP28 optical module"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL36LQFD1-G</h3><pre class="output-box">{
+  "description": "36-port 40GE interface card (FD1-G, QSFP+)",
+  "model_name": "CEL36LQFD1-G",
+  "port_configuration": {
+    "qsfp28_qsfpplus": {
+      "port_count": 36,
+      "speeds": {
+        "1x100G": 18,
+        "1x40G": 36,
+        "4x10G": 144
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical module",
+        "100GE QSFP28 optical module",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high-speed cable",
+        "QSFP+ to 4*SFP+ high-speed cable",
+        "QSFP28 to QSFP28 AOC cable"
+      ]
+    }
+  }
+}</pre></div><div class="linecard-item"><h3>CEL48XSFD-G</h3><pre class="output-box">{
+  "description": "48-Port 10GE Interface Card (FD-G, SFP+)",
+  "model_name": "CEL48XSFD-G",
+  "port_configuration": {
+    "sfp_plus": {
+      "port_count": 48,
+      "speeds": {
+        "1x10GE": 48,
+        "1x1GE": 48
+      },
+      "supported_optics": [
+        "GE eSFP",
+        "GE SFP copper modules",
+        "10GE SFP+ optical modules",
+        "SFP+ to SFP+ AOC cable",
+        "SFP+ to SFP+ high-speed cable",
+        "SFP GE optical modules",
+        "1000BASE-T copper modules"
+      ]
+    }
+  }
+}</pre></div></div>
+    </div>
+
+    <style>
+        .output-box {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        h2 { margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+        .linecard-item { margin-bottom: 20px; }
+    </style>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const filesList = document.getElementById('files-list');
+        const runBtn = document.getElementById('run-btn');
+        const statusDiv = document.getElementById('status');
+        const resultsContainer = document.getElementById('results-container');
+        const linecardNodesDiv = document.getElementById('linecard-nodes');
+        const opticsJsonPre = document.getElementById('optics-json');
+        const linecardDetailsDiv = document.getElementById('linecard-details');
+        let files = {};
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('over'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('over'), false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer;
+            let droppedFiles = dt.files;
+            handleFiles(droppedFiles);
+        }
+
+        function handleFiles(droppedFiles) {
+            for (let i = 0; i < droppedFiles.length; i++) {
+                const file = droppedFiles[i];
+                if (file.name.endsWith('.json')) {
+                    files.json = file;
+                } else if (file.name.endsWith('.pdf')) {
+                    files.pdf = file;
+                }
+            }
+            updateList();
+        }
+
+        function updateList() {
+            filesList.innerHTML = '';
+            if (files.json) filesList.innerHTML += `<div>JSON: ${files.json.name}</div>`;
+            if (files.pdf) filesList.innerHTML += `<div>PDF: ${files.pdf.name}</div>`;
+            runBtn.disabled = !(files.json && files.pdf);
+        }
+
+        runBtn.addEventListener('click', () => {
+            runBtn.disabled = true;
+            statusDiv.textContent = 'Processing... Please wait. This may take a few minutes as it runs multiple agents.';
+            resultsContainer.style.display = 'none';
+            linecardDetailsDiv.innerHTML = '';
+            
+            const formData = new FormData();
+            formData.append('json_file', files.json);
+            formData.append('pdf_file', files.pdf);
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'completed') {
+                    statusDiv.textContent = 'Processing completed successfully.';
+                    resultsContainer.style.display = 'block';
+                    
+                    linecardNodesDiv.textContent = result.linecard_nodes;
+                    opticsJsonPre.textContent = JSON.stringify(result.optics, null, 2);
+                    
+                    for (const [model, data] of Object.entries(result.linecards)) {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'linecard-item';
+                        itemDiv.innerHTML = `<h3>${model}</h3><pre class="output-box">${JSON.stringify(data, null, 2)}</pre>`;
+                        linecardDetailsDiv.appendChild(itemDiv);
+                    }
+                } else {
+                    statusDiv.textContent = 'Error: ' + (result.message || 'Unknown error');
+                }
+            })
+            .catch(error => {
+                statusDiv.textContent = 'Error: ' + error.message;
+            })
+            .finally(() => {
+                runBtn.disabled = false;
+            });
+        });
+    </script>
+
+</body></html>

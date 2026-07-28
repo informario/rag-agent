@@ -12,6 +12,8 @@ from app.agent.optics_crosscheck import load_optics_data, load_ethernet_standard
 load_dotenv()
 
 async def extract_linecards(json_path):
+    from app.utils.tree import TreeExplorer
+    explorer = TreeExplorer(json_path)
     agent = get_linecard_agent(json_path)
     llm = get_llm()
     memory = get_summary_memory(llm)
@@ -33,12 +35,24 @@ async def extract_linecards(json_path):
         clean_ids = clean_ids.split("Answer: ")[-1].strip()
     node_list = [nid.strip() for nid in clean_ids.split(",") if nid.strip()]
     
+    # Validate and auto-expand group nodes
+    check = explorer.validate_answer(node_list)
+    final_ids = list(check["valid"])
+    for group_id, leaves in check["expanded"].items():
+        print(f"Warning: agent returned group node {group_id}, auto-expanding to leaves {leaves}")
+        final_ids.extend(leaves)
+    
+    if check["unknown"]:
+        print(f"Warning: agent returned unknown node_ids: {check['unknown']}")
+    
     with open(os.path.join(output_dir, "linecard_nodes.json"), "w", encoding="utf-8") as f:
-        json.dump(node_list, f, indent=2)
+        json.dump(final_ids, f, indent=2)
     
     return node_ids_str
 
 async def extract_optics(json_path):
+    from app.utils.tree import TreeExplorer
+    explorer = TreeExplorer(json_path)
     node_extractor_agent = get_optics_node_agent(json_path)
     llm = get_llm()
     memory = get_summary_memory(llm)
@@ -60,8 +74,18 @@ async def extract_optics(json_path):
         clean_ids = clean_ids.split("Answer: ")[-1].strip()
     node_list = [nid.strip() for nid in clean_ids.split(",") if nid.strip()]
 
+    # Validate and auto-expand group nodes
+    check = explorer.validate_answer(node_list)
+    final_ids = list(check["valid"])
+    for group_id, leaves in check["expanded"].items():
+        print(f"Warning: agent returned group node {group_id}, auto-expanding to leaves {leaves}")
+        final_ids.extend(leaves)
+
+    if check["unknown"]:
+        print(f"Warning: agent returned unknown node_ids: {check['unknown']}")
+
     with open(os.path.join(output_dir, "optic_nodes.json"), "w", encoding="utf-8") as f:
-        json.dump(node_list, f, indent=2)
+        json.dump(final_ids, f, indent=2)
 
     return node_ids_str
 
