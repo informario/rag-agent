@@ -40,7 +40,7 @@ async def process():
         optics_node_ids = await extract_optics(json_path)
             
         optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
-        linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
+        linecards = None# await parse_linecards(linecard_node_ids, json_path, pdf_path)
         
         # Run optics cross-check before returning the result
         linecards = run_optics_crosscheck_on_data(linecards)

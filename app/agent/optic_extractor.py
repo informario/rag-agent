@@ -9,6 +9,10 @@ You will be provided with a hierarchical tree structure that represents the cont
 You will be provided with a series of tools which you will use to traverse the tree.
 You have to answer the node ids that identify each optic module.
 You must make sure you are extracting only one optic module per node id, and not a group or entire section of them.
+You must extract these nodes from the main body of the document, where each product is
+described with its own specifications — not from any index, table of contents, summary
+list, or cross-reference table that merely mentions or enumerates products by name without
+describing them individually.
 
 CRITICAL RULE ABOUT LEAVES:
 - A node_id is only a valid optic module answer if get_current_info reports it as a LEAF node (no children).

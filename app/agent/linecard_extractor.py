@@ -11,6 +11,10 @@ You have to answer the node ids that identify each linecard
 You must make sure you are extracting only one linecard per node id, and not a group or entire section of them.
 Make sure you reach the bottom of the tree to find the individual linecards, and not just the sections that contain them.
 Make sure you are extracting a linecard, not a processor unit, switch fabric, or any other piece of equipment.
+You must extract these nodes from the main body of the document, where each product is
+described with its own specifications — not from any index, table of contents, summary
+list, or cross-reference table that merely mentions or enumerates products by name without
+describing them individually.
 
 CRITICAL RULE ABOUT LEAVES:
 - A node_id is only a valid linecard answer if get_current_info reports it as a LEAF node (no children).
