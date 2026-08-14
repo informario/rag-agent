@@ -1,0 +1,22 @@
+{
+  "model_name": "CR8D00P8CFC1",
+  "description": "8-Port STM-1c/8-Port STM-4c POS Card (PIC)(Default Enable 4*STM-1c)",
+  "port_configuration": {
+    "SFP": {
+      "port_count": 8,
+      "speeds": {
+        "1x155M": 8,
+        "1x622M": 8,
+        "1x2.5G": 4
+      },
+      "supported_optics": [
+        "155Mbps SFP Electrical Module",
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "622Mbps eSFP Optical Module",
+        "2.5Gbps eSFP Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

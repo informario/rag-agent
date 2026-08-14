@@ -1,0 +1,28 @@
+{
+  "model_name": "CR8D00L8YFC1",
+  "description": "8-Port 25GE(SFP28)/10GE(SFP+) MACsec Physical Interface Card (PIC)",
+  "port_configuration": {
+    "sfp28": {
+      "port_count": 8,
+      "speeds": {
+        "1x25G": 8,
+        "1x10G": 8
+      },
+      "supported_optics": [
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1.25/9.953/10.3125Gbps SFP+ Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "10Gbps SFP+ CWDM Optical Module",
+        "10Gbps SFP+ Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module",
+        "1Gbps Electrical Module",
+        "25Gbps SFP28 Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "model_name": "CEL24LQFD-G",
+  "description": "24-Port 40GE Interface Card (FD-G, QSFP+)",
+  "port_configuration": {
+    "qsfp28_qsfp_plus": {
+      "port_count": 24,
+      "speeds": {
+        "1x40G": 24,
+        "4x10G": 96,
+        "1x100G": 12
+      },
+      "supported_optics": [
+        "40GE QSFP+ optical modules",
+        "QSFP+ to QSFP+ AOC cable",
+        "QSFP+ to 4*SFP+ AOC cable",
+        "QSFP+ to QSFP+ high\u2011speed cable",
+        "QSFP+ to 4*SFP+ high\u2011speed cable",
+        "100GE QSFP28 optical modules",
+        "QSFP28 to QSFP28 AOC cable"
+      ],
+      "explicitley_supported_speeds": {
+        "1x40G": 24,
+        "4x10G": 96,
+        "1x100G": 12
+      }
+    }
+  }
+}

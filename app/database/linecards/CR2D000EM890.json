@@ -1,0 +1,12 @@
+{
+  "model_name": "CR2D000EM890",
+  "description": "6 Channels E&M Interface Board",
+  "port_configuration": {
+    "em": {
+      "port_count": 6,
+      "speeds": null,
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

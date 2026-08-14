@@ -1,0 +1,126 @@
+[
+  {
+    "node_id": "0296",
+    "supported_optic": "1.25/9.953/10.31 25Gbps SFP+ Optical Module"
+  },
+  {
+    "node_id": "0296",
+    "supported_optic": "1.25/9.953/10.3125Gbps SFP+ Optical Module"
+  },
+  {
+    "node_id": "0215",
+    "supported_optic": "1.25Gbps CSFP BIDI Optical Module"
+  },
+  {
+    "node_id": "0204",
+    "supported_optic": "1.25Gbps eSFP BIDI Optical Module"
+  },
+  {
+    "node_id": "0226",
+    "supported_optic": "1.25Gbps eSFP CWDM Optical Module"
+  },
+  {
+    "node_id": "0190",
+    "supported_optic": "1.25Gbps eSFP Optical Module"
+  },
+  {
+    "node_id": "0361",
+    "supported_optic": "100Gbps CFP2 DWDM Optical Module"
+  },
+  {
+    "node_id": "0362",
+    "supported_optic": "100Gbps CFP2 Optical Module"
+  },
+  {
+    "node_id": "0366",
+    "supported_optic": "100Gbps QSFP28 Optical Module"
+  },
+  {
+    "node_id": "0308",
+    "supported_optic": "10Gbps SFP+ BIDI Optical Module"
+  },
+  {
+    "node_id": "0299",
+    "supported_optic": "10Gbps SFP+ CWDM Optical Module"
+  },
+  {
+    "node_id": "0285",
+    "supported_optic": "10Gbps SFP+ Optical Module"
+  },
+  {
+    "node_id": "0319",
+    "supported_optic": "10Gbps TXFP DWDM Optical Module"
+  },
+  {
+    "node_id": "0320",
+    "supported_optic": "10Gbps XFP DWDM Optical Module"
+  },
+  {
+    "node_id": "0222",
+    "supported_optic": "125M~1.25Gbps CSFP BIDI Optical Module"
+  },
+  {
+    "node_id": "0235",
+    "supported_optic": "125M~2.67Gbps eSFP DWDM Optical Module"
+  },
+  {
+    "node_id": "0171",
+    "supported_optic": "155Mbps SFP Electrical Module"
+  },
+  {
+    "node_id": "0182",
+    "supported_optic": "155Mbps eSFP BIDI Optical Module"
+  },
+  {
+    "node_id": "0173",
+    "supported_optic": "155Mbps eSFP Optical Module"
+  },
+  {
+    "node_id": "0189",
+    "supported_optic": "1Gbps Electrical Module"
+  },
+  {
+    "node_id": "0172",
+    "supported_optic": "1Gbps SyncE and 1588V2 Electrical Module"
+  },
+  {
+    "node_id": "0170",
+    "supported_optic": "2.048Mbps SFP Optical Module"
+  },
+  {
+    "node_id": "0276",
+    "supported_optic": "2.5Gbps eSFP Optical Module"
+  },
+  {
+    "node_id": "0345",
+    "supported_optic": "25Gbps SFP28 BIDI Optical Module"
+  },
+  {
+    "node_id": "0337",
+    "supported_optic": "25Gbps SFP28 Optical Module"
+  },
+  {
+    "node_id": "0378",
+    "supported_optic": "400Gbps QSFP-DD Optical Module"
+  },
+  {
+    "node_id": "0346",
+    "supported_optic": "40Gbps QSFP+ Optical Module"
+  },
+  {
+    "node_id": "0356",
+    "supported_optic": "50Gbps QSFP28 BIDI Optical Module"
+  },
+  {
+    "node_id": "0352",
+    "supported_optic": "50Gbps QSFP28 Optical Module"
+  },
+  {
+    "node_id": "0183",
+    "supported_optic": "622Mbps eSFP Optical Module"
+  },
+  {
+    "node_id": "0387",
+    "supported_optic": "Optical Amplifier Module"
+  }
+]

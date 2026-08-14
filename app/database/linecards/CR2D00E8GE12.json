@@ -1,0 +1,15 @@
+{
+  "model_name": "CR2D00E8GE12",
+  "description": "8-Port 100/1000Base-RJ45 Physical Interface Card",
+  "port_configuration": {
+    "rj45": {
+      "port_count": 8,
+      "speeds": {
+        "1x100M": 8,
+        "1x1000M": 8
+      },
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

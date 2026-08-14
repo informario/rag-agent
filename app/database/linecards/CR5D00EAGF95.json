@@ -1,0 +1,23 @@
+{
+  "model_name": "CR5D00EAGF95",
+  "description": "10-port 100/1000Base-X-SFP MACsec Physical Interface Card(PIC)",
+  "port_configuration": {
+    "sfp": {
+      "port_count": 10,
+      "speeds": {
+        "1x100M": 10,
+        "1x1G": 10
+      },
+      "supported_optics": [
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1Gbps Electrical Module",
+        "1.25Gbps eSFP Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

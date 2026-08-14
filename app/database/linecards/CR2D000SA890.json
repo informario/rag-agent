@@ -1,0 +1,12 @@
+{
+  "model_name": "CR2D000SA890",
+  "description": "8-Channel V.35/X.21/V.24 Board",
+  "port_configuration": {
+    "db28_serial": {
+      "port_count": 8,
+      "speeds": null,
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "model_name": "CR8D00L4XFC1",
+  "description": "4-Port 10G-SFP+ Physical Interface Card(PIC)",
+  "port_configuration": {
+    "sfp+": {
+      "port_count": 4,
+      "speeds": {
+        "1x10G": 4
+      },
+      "supported_optics": [
+        "10Gbps SFP+ Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "10Gbps SFP+ CWDM Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

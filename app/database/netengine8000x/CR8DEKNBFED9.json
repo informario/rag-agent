@@ -1,0 +1,24 @@
+{
+  "model_name": "CR8DEKNBFED9",
+  "description": "40-Port 100GBase-QSFP28 Integrated Line Processing Unit CM(LPUI-4T-E-CM)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 40,
+      "speeds": {
+        "1x100G": 40,
+        "1x50G": 40,
+        "1x40G": 40,
+        "4x25G": 160,
+        "4x10G": 160
+      },
+      "supported_optics": [
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "100Gbps QSFP28 Optical Module",
+        "BIDI Optical Module",
+        "Optical Amplifier Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

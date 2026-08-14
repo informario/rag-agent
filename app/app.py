@@ -2,7 +2,15 @@ import os
 import json
 from flask import Flask, request, render_template, jsonify
 from werkzeug.utils import secure_filename
-from app.main import extract_linecards, extract_optics, parse_optics, parse_linecards, run_optics_crosscheck_on_data
+from app.main import (
+    extract_switch_models,
+    extract_linecards,
+    extract_optics,
+    parse_switch_models,
+    parse_linecards,
+    parse_optics,
+    run_optics_crosscheck_on_data,
+)
 
 app = Flask(__name__, template_folder='templates')
 app.config['UPLOAD_FOLDER'] = 'app/uploads'
@@ -36,19 +44,23 @@ async def process():
     pdf_file.save(pdf_path)
     
     try:
-        linecard_node_ids = await extract_linecards(json_path)
-        optics_node_ids = await extract_optics(json_path)
+        switch_model_node_ids = None #await extract_switch_models(json_path)
+        linecard_node_ids = None #await extract_linecards(json_path)
             
-        optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
-        linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
+        switch_models = await parse_switch_models(switch_model_node_ids, json_path, pdf_path)
+        linecards = None #await parse_linecards(linecard_node_ids, json_path, pdf_path)
+        optic_targets = None #await extract_optics(json_path, linecards)
+        optics_data = None #parse_optics(optic_targets, json_path, pdf_path)
         
         # Run optics cross-check before returning the result
-        linecards = run_optics_crosscheck_on_data(linecards)
+        #linecards = run_optics_crosscheck_on_data(linecards)
         
         return jsonify({
             'status': 'completed',
+            'switch_model_nodes': switch_model_node_ids,
+            'switch_models': switch_models,
             'linecard_nodes': linecard_node_ids,
-            'optics_nodes': optics_node_ids,
+            'optics_nodes': [target['node_id'] for target in optic_targets] if optic_targets else [],
             'optics': optics_data,
             'linecards': linecards
         })

@@ -1,0 +1,16 @@
+{
+  "model_name": "CR8D00E8GEC1",
+  "description": "8-Port 100/1000Base-RJ45 Physical Interface Card(PIC)",
+  "port_configuration": {
+    "rj45": {
+      "port_count": 8,
+      "speeds": {
+        "1x1000M": 8,
+        "1x100M": 8,
+        "1x10M": 8
+      },
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

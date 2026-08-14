@@ -1,0 +1,18 @@
+{
+  "model_name": "CR5D00C4CFC1",
+  "description": "4-Port Channelized STM-1c POS-SFP Physical Interface Card(PIC)",
+  "port_configuration": {
+    "sfp": {
+      "port_count": 4,
+      "speeds": {
+        "1x155M": 4
+      },
+      "supported_optics": [
+        "155Mbps SFP Electrical Module",
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

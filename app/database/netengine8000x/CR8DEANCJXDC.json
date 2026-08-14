@@ -1,0 +1,43 @@
+{
+  "model_name": "CR8DEANCJXDC",
+  "description": "10-Port 100GBase-QSFP28 + 36-Port 25GE(SFP28)/10GE(SFP+)/GE(SFP) Integrated Line Processing Unit L CM(LPUI-2T-L-CM)",
+  "port_configuration": {
+    "sfp_family": {
+      "port_count": 36,
+      "speeds": {
+        "1x25G": 36,
+        "1x10G": 36,
+        "1x1G": 36
+      },
+      "supported_optics": [
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1Gbps Electrical Module",
+        "1.25Gbps eSFP Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "CWDM Optical Module",
+        "10Gbps SFP+ Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "DWDM Optical Module",
+        "25Gbps SFP28 Optical Module",
+        "25Gbps SFP28 BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "qsfp28": {
+      "port_count": 10,
+      "speeds": {
+        "1x100G": 10,
+        "1x50G": 10,
+        "1x40G": 10
+      },
+      "supported_optics": [
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "50Gbps QSFP28 BIDI Optical Module",
+        "100Gbps QSFP28 Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

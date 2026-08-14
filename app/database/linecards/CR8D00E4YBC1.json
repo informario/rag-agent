@@ -1,0 +1,21 @@
+{
+  "model_name": "CR8D00E4YBC1",
+  "description": "4-Port 25GE-SFP28 Physical Interface Card (PIC)",
+  "port_configuration": {
+    "sfp28": {
+      "port_count": 4,
+      "speeds": {
+        "1x25G": 4,
+        "1x10G": 4
+      },
+      "supported_optics": [
+        "10Gbps SFP+ BIDI Optical Module",
+        "10Gbps SFP+ CWDM Optical Module",
+        "10Gbps SFP+ Optical Module",
+        "25Gbps SFP28 Optical Module",
+        "25Gbps SFP28 BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

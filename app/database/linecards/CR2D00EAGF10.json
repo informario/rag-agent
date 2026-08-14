@@ -1,0 +1,24 @@
+{
+  "model_name": "CR2D00EAGF10",
+  "description": "10-Port 100/1000Base-X-SFP Physical Interface Card",
+  "port_configuration": {
+    "sfp": {
+      "port_count": 10,
+      "speeds": {
+        "1x100M": 10,
+        "1x1000M": 10
+      },
+      "supported_optics": [
+        "155Mbps SFP Electrical Module",
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1Gbps Electrical Module",
+        "1.25Gbps eSFP Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

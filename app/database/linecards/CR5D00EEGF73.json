@@ -1,0 +1,35 @@
+{
+  "model_name": "CR5D00EEGF73",
+  "description": "20-Port 100/1000Base-X-CSFP/10-Port 100/1000Base-X-SFP Physical Interface Card(PIC)",
+  "port_configuration": {
+    "c_sfp": {
+      "port_count": 20,
+      "speeds": {
+        "1x100M": 20,
+        "1x1G": 20
+      },
+      "supported_optics": [
+        "1.25Gbps CSFP BIDI Optical Module",
+        "125M~1.25Gbps CSFP BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "sfp": {
+      "port_count": 10,
+      "speeds": {
+        "1x100M": 10,
+        "1x1G": 10
+      },
+      "supported_optics": [
+        "1.25Gbps eSFP Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module",
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1Gbps Electrical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

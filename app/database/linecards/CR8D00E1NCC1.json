@@ -1,0 +1,17 @@
+{
+  "model_name": "CR8D00E1NCC1",
+  "description": "1-Port 100GE/ 1-Port 200GE CFP2 Physical Interface Card(PIC) (Enable 1*100GE by default)",
+  "port_configuration": {
+    "cfp2": {
+      "port_count": 1,
+      "speeds": {
+        "1x100G": 1
+      },
+      "supported_optics": [
+        "100Gbps CFP2 Optical Module",
+        "100Gbps CFP2 DWDM Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

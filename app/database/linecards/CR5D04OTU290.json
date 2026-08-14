@@ -1,0 +1,17 @@
+{
+  "model_name": "CR5D04OTU290",
+  "description": "4-Port 10G OTU2-XFP Physical Interface Card(PIC)",
+  "port_configuration": {
+    "xfp": {
+      "port_count": 4,
+      "speeds": {
+        "1x10G": 4
+      },
+      "supported_optics": [
+        "10Gbps TXFP DWDM Optical Module",
+        "10Gbps XFP DWDM Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

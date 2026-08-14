@@ -1,0 +1,14 @@
+[
+  {
+    "model_name": "NetEngine 8000 M14"
+  },
+  {
+    "model_name": "NetEngine 8000 M4",
+    "depth_cm": 22.0,
+    "max_throughput": "2.4 Tbit/s",
+    "height_ru": 2
+  },
+  {
+    "model_name": "NetEngine 8000 M8"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "model_name": "CR8D00E4XFC3",
+  "description": "4-Port 10GE(SFP+)/GE(SFP) MACsec Physical Interface Card(PIC)",
+  "port_configuration": {
+    "sfp+": {
+      "port_count": 4,
+      "speeds": {
+        "1x10G": 4,
+        "1x1G": 4
+      },
+      "supported_optics": [
+        "1.25/9.953/10.3125Gbps SFP+ Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "10Gbps SFP+ CWDM Optical Module",
+        "10Gbps SFP+ Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module",
+        "1Gbps Electrical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

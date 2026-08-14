@@ -1,0 +1,30 @@
+{
+  "model_name": "CR2D00MPAA90",
+  "description": "4-Channel FXS/FXO+2-Channel E&M+2-Channel RS232+2-Channel RS485 Board",
+  "port_configuration": {
+    "rs232": {
+      "port_count": 2,
+      "speeds": {},
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    },
+    "rs485": {
+      "port_count": 2,
+      "speeds": {},
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    },
+    "em": {
+      "port_count": 2,
+      "speeds": {},
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    },
+    "fxs_fxo": {
+      "port_count": 4,
+      "speeds": {},
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

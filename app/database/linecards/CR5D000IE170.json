@@ -1,0 +1,14 @@
+{
+  "model_name": "CR5D000IE170",
+  "description": "32-Port E1 Physical Interface Card(PIC, 75ohm)",
+  "port_configuration": {
+    "e1": {
+      "port_count": 32,
+      "speeds": {
+        "1x2048kbit/s": 32
+      },
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

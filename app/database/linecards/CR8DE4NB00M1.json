@@ -1,0 +1,23 @@
+{
+  "model_name": "CR8DE4NB00M1",
+  "description": "4-Port 100GBase/50GBase-QSFP28 Physical Interface Card(PIC)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 4,
+      "speeds": {
+        "1x100G": 4,
+        "1x50G": 4,
+        "1x40G": 4,
+        "4x25G": 16,
+        "4x10G": 16
+      },
+      "supported_optics": [
+        "100Gbps QSFP28 Optical Module",
+        "50Gbps QSFP28 BIDI Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "40Gbps QSFP+ Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

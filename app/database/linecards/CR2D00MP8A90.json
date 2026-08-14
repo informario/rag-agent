@@ -1,0 +1,24 @@
+{
+  "model_name": "CR2D00MP8A90",
+  "description": "4 Channels C37.94 Optical Interface and 4 Channels CoDir64K Electric Interface Board",
+  "port_configuration": {
+    "c37.94_optical": {
+      "port_count": 4,
+      "speeds": {
+        "1x2048kbit/s": 4
+      },
+      "supported_optics": [
+        "2.048Mbps SFP Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "codir64k_electrical": {
+      "port_count": 4,
+      "speeds": {
+        "1x64kbit/s": 4
+      },
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

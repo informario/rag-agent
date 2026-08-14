@@ -1,0 +1,29 @@
+{
+  "model_name": "CR8DE1KB00M2",
+  "description": "1-Port 400GBase-QSFP-DD Single-layer Physical Interface Card CM(Enable 1*100G)(PIC)",
+  "port_configuration": {
+    "qsfp_dd": {
+      "port_count": 1,
+      "speeds": {
+        "1x400G": 1,
+        "1x200G": 1,
+        "1x100G": 1
+      },
+      "supported_optics": [
+        "400Gbps QSFP-DD Optical Module",
+        "100Gbps QSFP28 Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "qsfp28": {
+      "port_count": 1,
+      "speeds": {
+        "1x100G": 1
+      },
+      "supported_optics": [
+        "Optical Amplifier Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

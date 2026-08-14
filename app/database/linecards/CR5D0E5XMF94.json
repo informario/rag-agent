@@ -1,0 +1,23 @@
+{
+  "model_name": "CR5D0E5XMF94",
+  "description": "2-Port 50GBase/1-Port 100GBase-QSFP28 FlexE MACsec Physical Interface Card(PIC)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 2,
+      "speeds": {
+        "1x100G": 1,
+        "1x50G": 2,
+        "1x40G": 1,
+        "4x25G": 8,
+        "4x10G": 8
+      },
+      "supported_optics": [
+        "100Gbps QSFP28 Optical Module",
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 BIDI Optical Module",
+        "50Gbps QSFP28 Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "model_name": "CR8DE1N8XFM0",
+  "description": "1-Port 100GBase/50GBase-QSFP28 FlexE MACsec+8-Port 10GE(SFP+)/GE(SFP) MACsec Physical Interface Card(PIC)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 1,
+      "speeds": {
+        "1x100G": 1,
+        "1x50G": 1
+      },
+      "supported_optics": [
+        "100Gbps QSFP28 Optical Module",
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 BIDI Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "Optical Amplifier Module"
+      ],
+      "explicitley_supported_speeds": {}
+    },
+    "sfp+": {
+      "port_count": 8,
+      "speeds": {
+        "1x10G": 8,
+        "1x1G": 8
+      },
+      "supported_optics": [
+        "155Mbps eSFP Optical Module",
+        "155Mbps eSFP BIDI Optical Module",
+        "1.25/9.953/10.3125Gbps SFP+ Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "10Gbps SFP+ CWDM Optical Module",
+        "10Gbps SFP+ Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module",
+        "1Gbps Electrical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

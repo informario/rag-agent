@@ -1,0 +1,12 @@
+{
+  "model_name": "CR5D000DE1C1",
+  "description": "16-Port E1 Physical Interface Card(PIC,75ohm/120ohm)",
+  "port_configuration": {
+    "e1": {
+      "port_count": 16,
+      "speeds": null,
+      "supported_optics": [],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

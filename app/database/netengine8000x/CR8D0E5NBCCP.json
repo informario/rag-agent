@@ -1,0 +1,23 @@
+{
+  "model_name": "CR8D0E5NBCCP",
+  "description": "5-Port 100GBase-QSFP28 FlexE MACsec Flexible Card CM(P1T-CM)",
+  "port_configuration": {
+    "qsfp28": {
+      "port_count": 5,
+      "speeds": {
+        "1x100G": 5,
+        "1x50G": 5,
+        "1x40G": 5,
+        "4x25G": 20,
+        "4x10G": 20
+      },
+      "supported_optics": [
+        "40Gbps QSFP+ Optical Module",
+        "50Gbps QSFP28 Optical Module",
+        "100Gbps QSFP28 Optical Module",
+        "BIDI Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

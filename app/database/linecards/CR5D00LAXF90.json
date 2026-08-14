@@ -1,0 +1,24 @@
+{
+  "model_name": "CR5D00LAXF90",
+  "description": "10-Port 10GBase LAN/WAN-SFP+ Physical Interface Card(PIC)",
+  "port_configuration": {
+    "sfp+": {
+      "port_count": 10,
+      "speeds": {
+        "1x10GE": 10,
+        "1xGE": 10
+      },
+      "supported_optics": [
+        "10Gbps SFP+ Optical Module",
+        "10Gbps SFP+ CWDM Optical Module",
+        "10Gbps SFP+ BIDI Optical Module",
+        "1.25Gbps eSFP Optical Module",
+        "1.25Gbps eSFP CWDM Optical Module",
+        "1.25Gbps eSFP BIDI Optical Module",
+        "125M~2.67Gbps eSFP DWDM Optical Module",
+        "1.25/9.953/10.3125Gbps SFP+ Optical Module"
+      ],
+      "explicitley_supported_speeds": {}
+    }
+  }
+}

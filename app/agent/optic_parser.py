@@ -1,13 +1,22 @@
 from llama_index.core.agent.workflow import AgentWorkflow
 from llama_index.core.tools import FunctionTool
 from app.utils.llm import get_llm
-from app.utils.pdf_extractor import PDFExtractor
 
 prompt = """
-You are a networks expert. You will be given a slice of a hardware datasheet PDF (in English) describing one or more optics pluggable transceivers. Your job is to extract the specifications of the ONE optic that is completely and fully described within this slice, and output them as JSON.
+You are a networks expert. You will be given a small PDF slice that was selected
+from an exact optic-category heading in a hardware datasheet. Your job is to
+catalog only that requested optic category.
 
-Use the `record_optics` tool to save the optic found in this section under its category name (e.g. "GE eSFP Optical Modules", "10GE SFP+ Optical Modules").
-Also, you must include all optical port standards/types, only if explicitly listed (e.g. ["1000BASE-SX", "1000BASE-LX"]).
+Use the `record_optics` tool exactly once if, and only if, the requested category
+is actually described in the slice. Record its explicitly listed product model
+names and all explicitly listed optical Ethernet standards/types (for example,
+["1000BASE-SX", "1000BASE-LX"]). An empty module list is allowed when the
+source proves the category/standards but does not name individual products.
+
+Do not record a neighboring category, an electrical module, a table of contents,
+or information inferred from the requested category name. Do not invent product
+names or standards. If the requested category is not verifiably described, do
+not call the tool and answer done.
 
 You MUST respond in this exact format every time you use a tool:
 Thought: <your reasoning>
@@ -56,13 +65,12 @@ class OpticsRegistry:
             }
         }
 
-def get_agent(registry: OpticsRegistry, node_id: str = None):
+def get_agent(registry: OpticsRegistry, supported_optic: str, node_id: str = None):
     llm = get_llm()
 
-    def record_optics(category: str, module_names: list[str], standards: list[str] = None) -> str:
-        """Record a list of optical modules and their standards found under a given optic module category.
-        (e.g. category='GE eSFP Optical Modules', module_names=['SFP-GE-SX-MM850'], standards=['1000BASE-SX'])."""
-        return registry.add(category, module_names, standards, node_id)
+    def record_optics(module_names: list[str], standards: list[str] = None) -> str:
+        """Record explicit models and standards for the requested optic category only."""
+        return registry.add(supported_optic, module_names, standards, node_id)
 
     tools = [
         FunctionTool.from_defaults(fn=record_optics),
