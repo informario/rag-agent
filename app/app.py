@@ -36,11 +36,11 @@ async def process():
     pdf_file.save(pdf_path)
     
     try:
-        linecard_node_ids = None #await extract_linecards(json_path)
+        linecard_node_ids = await extract_linecards(json_path)
         optics_node_ids = await extract_optics(json_path)
             
         optics_data = await parse_optics(optics_node_ids, json_path, pdf_path)
-        linecards = None# await parse_linecards(linecard_node_ids, json_path, pdf_path)
+        linecards = await parse_linecards(linecard_node_ids, json_path, pdf_path)
         
         # Run optics cross-check before returning the result
         linecards = run_optics_crosscheck_on_data(linecards)
@@ -64,4 +64,4 @@ async def process():
 if __name__ == '__main__':
     # Increase timeout for the development server if supported, 
     # though usually this error comes from a proxy like Nginx or Gunicorn settings.
-    app.run(debug=True, port=5001, threaded=True)
+    app.run(debug=True, port=5004, threaded=True)
